@@ -2,14 +2,18 @@
 declare( strict_types = 1 );
 namespace Umlts\MarcReader;
 
+/**
+ * Class parsing raw MARC data
+ * 
+ * More information on the file format:
+ * https://www.loc.gov/marc/specifications/specrecstruc.html
+ * 
+ */
 class MarcRecordReader {
 
     public const FT = "\x1E";
     public const RT = "\x1D";
     public const DELIMITER = "\x1F";
-    public const SUBFIELD_INDICATOR = "\x1F";
-    public const END_OF_FIELD = "\x1E";
-    public const END_OF_RECORD = "\x1D";
 
     public const LEADER_LENGTH = 24;
     public const LEADER_RECORD_LENGTH = 0;
@@ -36,8 +40,6 @@ class MarcRecordReader {
     public const DIR_LENGTH_OF_FIELD_SIZE = 4;
     public const DIR_STARTING_CHARACTER_POSITION = 7;
     public const DIR_STARTING_CHARACTER_POSITION_SIZE = 5;
-
-    public const MAX_LENGTH = 99999;
 
     /**
      * @var string
@@ -361,7 +363,7 @@ class MarcRecordReader {
      * @return void
      */
     public static function get( string $record ) {
-        return getRecordAsAssocArray( $record );
+        return self::getRecordAsAssocArray( $record );
     }
 
 }
