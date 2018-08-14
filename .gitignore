@@ -1,0 +1,5 @@
+test.php
+vendor
+vendor/*
+data/*
+!.gitkeep

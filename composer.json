@@ -1,0 +1,24 @@
+{
+    "name": "umlts/marc_reader",
+    "type": "library",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "bartikowskiw",
+            "email": "bartikowskiw@missouri.edu"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Umlts\\MarcReader\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0",
+        "pear/file_marc": "^1.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.3"
+    }
+}
