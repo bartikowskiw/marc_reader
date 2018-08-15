@@ -15,8 +15,7 @@
         }
     },
     "require": {
-        "php": ">=7.0",
-        "pear/file_marc": "^1.2"
+        "php": ">=7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.3"
