@@ -2,4 +2,5 @@ test.php
 vendor
 vendor/*
 data/*
+coverage
 !.gitkeep
