@@ -47,6 +47,16 @@ class MarcRecordReader {
     protected $data;
 
     /**
+     * Get the record's leader
+     *
+     * @param string $record
+     * @return string
+     */
+    public static function getLeader( string $record ) : string {
+        return substr( $record, 0, self::LEADER_LENGTH );
+    }
+
+    /**
      * Get the base address of the MARC data
      *
      * @return void
@@ -204,9 +214,9 @@ class MarcRecordReader {
      *
      * @param string $tag
      * @param string $record
-     * @return string
+     * @return string[]
      */
-    public static function getControlField( string $tag, string $record ) : string {
+    public static function getControlFields( string $tag, string $record ) : array {
 
         // Check tag
         if ( !preg_match( '/^00[0-9]$/', $tag ) ) {
@@ -214,18 +224,18 @@ class MarcRecordReader {
         }
 
         // Use optimized function for MARC Tag 001
-        if ( $tag == '001' ) { return self::get001( $record ); }
+        if ( $tag == '001' ) { return [ self::get001( $record ) ]; }
 
+        $fields = [];
         $dir = self::getDirectory( $record );
         
         foreach ( $dir as $entry ) {
             if ( self::getDirTag( $entry ) === $tag ) {
-                return self::getRawField( $entry, $record );
+                $fields[] = self::getRawField( $entry, $record );
             }
         }
 
-        // Nothing found
-        throw new \RuntimeException( 'Field not found.');
+        return $fields;
     }
 
     /**
@@ -266,7 +276,7 @@ class MarcRecordReader {
 
         return [
             'ind1' => self::getFirstIndicator( $field ),
-            'ind2' => self::getFirstIndicator( $field ),
+            'ind2' => self::getSecondIndicator( $field ),
             'subfields' => self::getSubfieldsAsAssocArray(
                 self::getSubfields( $field )
             ),
@@ -281,7 +291,7 @@ class MarcRecordReader {
      * @return string
      */
     public static function getFirstIndicator( string $field ) : string {
-        return substr( $field, 0, 1 );
+        return (string) substr( $field, 0, 1 );
     }
 
     /**
@@ -291,7 +301,7 @@ class MarcRecordReader {
      * @return string
      */
     public static function getSecondIndicator( string $field ) : string {
-        return substr( $field, 1, 1 );
+        return (string) substr( $field, 1, 1 );
     }
 
     /**
