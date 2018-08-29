@@ -4,42 +4,42 @@ namespace Umlts\MarcReader;
 
 /**
  * Class parsing raw MARC data
- * 
+ *
  * More information on the file format:
  * https://www.loc.gov/marc/specifications/specrecstruc.html
- * 
+ *
  */
 class MarcRecordReader {
 
-    public const FT = "\x1E";
-    public const RT = "\x1D";
-    public const DELIMITER = "\x1F";
+    const FT = "\x1E";
+    const RT = "\x1D";
+    const DELIMITER = "\x1F";
 
-    public const LEADER_LENGTH = 24;
-    public const LEADER_RECORD_LENGTH = 0;
-    public const LEADER_RECORD_LENGTH_SIZE = 5;
-    public const LEADER_RECORD_STATUS = 5;
-    public const LEADER_RECORD_STATUS_SIZE = 1;
-    public const LEADER_TYPE_OF_RECORD = 6;
-    public const LEADER_TYPE_OF_RECORD_SIZE = 1;
-    public const LEADER_CHARACTER_CODING_SCHEME = 9;
-    public const LEADER_CHARACTER_CODING_SCHEME_SIZE = 1;
-    public const LEADER_INDICATOR_COUNT = 10;
-    public const LEADER_INDICATOR_COUNT_SIZE = 1;
-    public const LEADER_SUBFIELD_CODE_LENGTH = 11;
-    public const LEADER_SUBFIELD_CODE_LENGTH_SIZE = 1;
-    public const LEADER_BASE_ADDRESS_OF_DATA = 12;
-    public const LEADER_BASE_ADDRESS_OF_DATA_SIZE = 5;
-    public const LEADER_ENTRY_MAP = 20;
-    public const LEADER_ENTRY_MAP_SIZE = 4;
+    const LEADER_LENGTH = 24;
+    const LEADER_RECORD_LENGTH = 0;
+    const LEADER_RECORD_LENGTH_SIZE = 5;
+    const LEADER_RECORD_STATUS = 5;
+    const LEADER_RECORD_STATUS_SIZE = 1;
+    const LEADER_TYPE_OF_RECORD = 6;
+    const LEADER_TYPE_OF_RECORD_SIZE = 1;
+    const LEADER_CHARACTER_CODING_SCHEME = 9;
+    const LEADER_CHARACTER_CODING_SCHEME_SIZE = 1;
+    const LEADER_INDICATOR_COUNT = 10;
+    const LEADER_INDICATOR_COUNT_SIZE = 1;
+    const LEADER_SUBFIELD_CODE_LENGTH = 11;
+    const LEADER_SUBFIELD_CODE_LENGTH_SIZE = 1;
+    const LEADER_BASE_ADDRESS_OF_DATA = 12;
+    const LEADER_BASE_ADDRESS_OF_DATA_SIZE = 5;
+    const LEADER_ENTRY_MAP = 20;
+    const LEADER_ENTRY_MAP_SIZE = 4;
 
-    public const DIR_ENTRY_LENGTH = 12;
-    public const DIR_TAG = 0;
-    public const DIR_TAG_SIZE = 3;
-    public const DIR_LENGTH_OF_FIELD = 3;
-    public const DIR_LENGTH_OF_FIELD_SIZE = 4;
-    public const DIR_STARTING_CHARACTER_POSITION = 7;
-    public const DIR_STARTING_CHARACTER_POSITION_SIZE = 5;
+    const DIR_ENTRY_LENGTH = 12;
+    const DIR_TAG = 0;
+    const DIR_TAG_SIZE = 3;
+    const DIR_LENGTH_OF_FIELD = 3;
+    const DIR_LENGTH_OF_FIELD_SIZE = 4;
+    const DIR_STARTING_CHARACTER_POSITION = 7;
+    const DIR_STARTING_CHARACTER_POSITION_SIZE = 5;
 
     /**
      * @var string
@@ -114,7 +114,7 @@ class MarcRecordReader {
     }
 
     /**
-     * Get offset of field data relative to base address from 
+     * Get offset of field data relative to base address from
      * raw directory entry
      *
      * @param string $entry
@@ -157,7 +157,7 @@ class MarcRecordReader {
 
     /**
      * Get 001 MARC Field
-     * 
+     *
      * This function is optimized to be as fast as possible. It is
      * also used in the getControlField method, so the speed advantage
      * is just about 10 to 20 percent.
@@ -168,7 +168,7 @@ class MarcRecordReader {
     public static function get001( string $record ) : string {
 
         $entry = substr( $record, self::LEADER_LENGTH, self::DIR_ENTRY_LENGTH );
-        
+
         if ( strpos( $entry, '001') !== 0 ) {
             throw new \RuntimeException( 'Field not found.');
         }
@@ -197,7 +197,7 @@ class MarcRecordReader {
      * @return string
      */
     public static function getRawField( string $entry, string $record, int $base_address = -1 ) : string {
-        
+
         if ( $base_address <= 0 ) {
             $base_address = self::getBaseAddress( $record );
         }
@@ -228,7 +228,7 @@ class MarcRecordReader {
 
         $fields = [];
         $dir = self::getDirectory( $record );
-        
+
         foreach ( $dir as $entry ) {
             if ( self::getDirTag( $entry ) === $tag ) {
                 $fields[] = self::getRawField( $entry, $record );
@@ -360,7 +360,7 @@ class MarcRecordReader {
                 [ 'tag' => $tag ],
                 $temp
             );
-            
+
         }
 
         return $record_array;
