@@ -7,11 +7,11 @@ namespace Umlts\MarcReader;
  */
 class MarcReader {
 
-    public const SOURCE_FILE = 1;
-    public const SOURCE_STRING = 2;
+    const SOURCE_FILE = 1;
+    const SOURCE_STRING = 2;
 
-    public const RT = "\x1D";
-    public const MAX_RECORD_LENGTH = 99999;
+    const RT = "\x1D";
+    const MAX_RECORD_LENGTH = 99999;
 
     protected $source;
     protected $pos;
@@ -24,10 +24,10 @@ class MarcReader {
      * @param integer $type
      */
     function __construct( string $source, int $type = self::SOURCE_FILE ) {
-        
+
         $this->source = $source;
         $this->type = $type;
-        
+
         switch ( $type ) {
 
             case self::SOURCE_FILE:
@@ -56,8 +56,8 @@ class MarcReader {
 
     /**
      * Get next raw record
-     * 
-     * This function mimics the behavoir of the nextRaw method from the 
+     *
+     * This function mimics the behavoir of the nextRaw method from the
      * File_MARC library.
      *
      * @return string|bool
@@ -96,5 +96,5 @@ class MarcReader {
         return $record;
     }
 
-    
+
 }
