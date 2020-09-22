@@ -1,7 +1,7 @@
 MarcReader
 ==========
 
-This library is intedend for the use in cases where speed is critical. 
+This library is intended for use cases where speed is critical. 
 It is *way* faster than [Pear/File_MARC](https://github.com/pear/File_MARC) 
 especially when just some of the fields are needed. This makes the class 
 well suited for indexing large record sets.
